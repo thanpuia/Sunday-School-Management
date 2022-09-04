@@ -6,81 +6,62 @@ use App\Models\Student;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
 
+use App\Interfaces\StudentRepositoryInterface;
+
 class StudentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    private StudentRepositoryInterface $studentRepository;
+    public function __construct(StudentRepositoryInterface $studentRepository)
     {
-        //
+        $this->studentRepository = $studentRepository;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function index()
+    {
+        return response()->json([
+            'data' => $this->studentRepository->getAllModels()
+        ]);
+    }
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreStudentRequest  $request
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function store(StoreStudentRequest $request)
     {
-        //
+        return [
+            'data'=> $this->studentRepository->createModel($request->all())
+        ];
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Student  $student
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function show(Student $student)
     {
-        //
+        return $this->studentRepository->getModelById($student->id);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Student  $student
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function edit(Student $student)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateStudentRequest  $request
-     * @param  \App\Models\Student  $student
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(UpdateStudentRequest $request, Student $student)
     {
-        //
+        return $this->studentRepository->updateModel($student->id, $request->all());
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Student  $student
-     * @return \Illuminate\Http\Response
-     */
+  
     public function destroy(Student $student)
     {
-        //
+        return $this->studentRepository->deleteModel($student->id);
+    }
+
+    public function showStudentByTeacher ($teacherId){
+        return $this->studentRepository->showStudentByTeacher($teacherId);
     }
 }

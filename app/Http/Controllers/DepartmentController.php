@@ -6,81 +6,61 @@ use App\Models\Department;
 use App\Http\Requests\StoreDepartmentRequest;
 use App\Http\Requests\UpdateDepartmentRequest;
 
+use App\Interfaces\DepartmentRepositoryInterface;
+
+
+
 class DepartmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private DepartmentRepositoryInterface $departmentRepository;
+    public function __construct(DepartmentRepositoryInterface $departmentRepository)
+    {
+        $this->departmentRepository = $departmentRepository;
+    }
+
     public function index()
     {
-        //
+        return response()->json([
+            'data' => $this->departmentRepository->getAllModels()
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
-        //
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreDepartmentRequest  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(StoreDepartmentRequest $request)
     {
-        //
+        return [
+            'data'=> $this->departmentRepository->createModel($request->all())
+        ];
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Department  $department
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Department $department)
     {
-        //
+        return $this->departmentRepository->getModelById($department->id);
+        
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Department  $department
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(Department $department)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateDepartmentRequest  $request
-     * @param  \App\Models\Department  $department
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(UpdateDepartmentRequest $request, Department $department)
     {
-        //
+        return $this->departmentRepository->updateModel($department->id, $request->all());
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Department  $department
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(Department $department)
     {
-        //
+        return $this->departmentRepository->deleteModel($department->id);
     }
 }
