@@ -7,7 +7,7 @@ use App\Http\Requests\StoreTeacherRequest;
 use App\Http\Requests\UpdateTeacherRequest;
 
 use App\Interfaces\TeacherRepositoryInterface;
-
+use Illuminate\Support\Facades\Log;
 
 class TeacherController extends Controller
 {
@@ -41,7 +41,9 @@ class TeacherController extends Controller
 
     public function show(Teacher $teacher)
     {
-        return $this->teacherRepository->getModelById($teacher->id);
+        return [
+            'data' => $this->teacherRepository->getModelById($teacher->id)
+        ];
     }
 
     public function edit(Teacher $teacher)
@@ -51,7 +53,11 @@ class TeacherController extends Controller
 
     public function update(UpdateTeacherRequest $request, Teacher $teacher)
     {
-        return $this->teacherRepository->updateModel($teacher->id, $request->all());
+        Log::error("sdf ".$request);
+        return [
+            'data' =>$this->teacherRepository->updateModel($teacher->id, $request->all())
+        ];
+         
 
     }
 

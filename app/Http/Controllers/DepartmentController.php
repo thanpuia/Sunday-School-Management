@@ -42,7 +42,9 @@ class DepartmentController extends Controller
 
     public function show(Department $department)
     {
-        return $this->departmentRepository->getModelById($department->id);
+        return [
+            'data'=>$this->departmentRepository->getModelById($department->id)
+        ];
         
     }
 
@@ -55,7 +57,9 @@ class DepartmentController extends Controller
 
     public function update(UpdateDepartmentRequest $request, Department $department)
     {
-        return $this->departmentRepository->updateModel($department->id, $request->all());
+        return [
+            'data' =>  $this->departmentRepository->updateModel($department->id, $request->all())
+        ];
     }
 
 

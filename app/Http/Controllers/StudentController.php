@@ -40,7 +40,9 @@ class StudentController extends Controller
  
     public function show(Student $student)
     {
-        return $this->studentRepository->getModelById($student->id);
+        return [
+            'data' => $this->studentRepository->getModelById($student->id)
+        ];
     }
 
  
@@ -52,7 +54,10 @@ class StudentController extends Controller
     
     public function update(UpdateStudentRequest $request, Student $student)
     {
-        return $this->studentRepository->updateModel($student->id, $request->all());
+
+        return [
+            'data' => $this->studentRepository->updateModel($student->id, $request->all())
+        ];
     }
 
   
@@ -62,6 +67,8 @@ class StudentController extends Controller
     }
 
     public function showStudentByTeacher ($teacherId){
-        return $this->studentRepository->showStudentByTeacher($teacherId);
+        return [
+            'data' => $this->studentRepository->showStudentByTeacher($teacherId)
+        ];
     }
 }
