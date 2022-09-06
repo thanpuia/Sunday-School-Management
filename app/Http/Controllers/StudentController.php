@@ -7,6 +7,9 @@ use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
 
 use App\Interfaces\StudentRepositoryInterface;
+use App\Models\Department;
+use App\Models\Teacher;
+use Illuminate\Support\Facades\Log;
 
 class StudentController extends Controller
 {
@@ -40,8 +43,13 @@ class StudentController extends Controller
  
     public function show(Student $student)
     {
+        $department = Department::all();
+        $teacher = Teacher::all();
+
         return [
-            'data' => $this->studentRepository->getModelById($student->id)
+            'data' => $this->studentRepository->getModelById($student->id),
+            'department' => $department,
+            'teacher' => $teacher
         ];
     }
 
@@ -67,6 +75,7 @@ class StudentController extends Controller
     }
 
     public function showStudentByTeacher ($teacherId){
+        Log::error("Request zzzz ");
         return [
             'data' => $this->studentRepository->showStudentByTeacher($teacherId)
         ];

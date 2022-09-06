@@ -34,6 +34,7 @@ class TeacherController extends Controller
    
     public function store(StoreTeacherRequest $request)
     {
+        Log::info("STORE!");
         return [
             'data'=> $this->teacherRepository->createModel($request->all())
         ];
@@ -53,7 +54,10 @@ class TeacherController extends Controller
 
     public function update(UpdateTeacherRequest $request, Teacher $teacher)
     {
-        Log::error("sdf ".$request);
+        Log::error("Request ".$request);
+        //compare the department id
+        // if diff-> search for the students with the teachers id, and set them all to default teacher
+
         return [
             'data' =>$this->teacherRepository->updateModel($teacher->id, $request->all())
         ];
