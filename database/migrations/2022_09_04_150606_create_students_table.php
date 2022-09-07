@@ -42,8 +42,8 @@ class CreateStudentsTable extends Migration
             $table->string("param9")->nullable();
             $table->string("param10")->nullable();
 
-            $table->foreign('teacher_id')->references('id')->on('teacher');
-            $table->foreign('department_id')->references('id')->on('department');
+            $table->foreign('teacher_id')->references('id')->on('teachers');
+            $table->foreign('department_id')->references('id')->on('departments');
 
             $table->softDeletes();
             $table->timestamps();
